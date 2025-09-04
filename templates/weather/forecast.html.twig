@@ -1,0 +1,50 @@
+{% extends 'layout_boxed.html.twig' %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col">
+            <h1>Forecast for {{ city }}, {{ countryCode }}</h1>
+        </div>
+    </div>
+
+    <div class="row forecast mt-3">
+        {% for forecast in forecasts %}
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="card forecast-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="day">{{ forecast.date | date('l') }}</span>
+                        <span class="date">{{ forecast.date | date('d.m') }}</span>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <i class="bi-{{ forecast.icon }} forecast-icon display-4"></i>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <div class="temperature h3 mb-0">{{ forecast.temperature }}&deg;</div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <dl class="row mb-0">
+                            <dt class="col-6">Pressure</dt>
+                            <dd class="col-6">{{ forecast.pressure }}</dd>
+
+                            <dt class="col-6">Humidity</dt>
+                            <dd class="col-6">{{ forecast.humidity }}%</dd>
+
+                            <dt class="col-6">Wind</dt>
+                            <dd class="col-6">{{ forecast.wind_speed }} m/s</dd>
+
+                            <dt class="col-6">Cloudiness</dt>
+                            <dd class="col-6">{{ forecast.clouds }}%</dd>
+                        </dl>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
