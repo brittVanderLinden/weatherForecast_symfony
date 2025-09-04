@@ -3,7 +3,13 @@
 {% block content %}
     <div class="row mt-3">
         <div class="col">
-            <h1>Forecast for {{ city }}, {{ countryCode }}</h1>
+            <h1>Forecast for {{ location.name }}, {{ location.countryCode }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div id="map" class="forecast-card mt-3" style="height: 400px;"></div>
         </div>
     </div>
 
@@ -36,10 +42,10 @@
                             <dd class="col-6">{{ forecast.humidity }}%</dd>
 
                             <dt class="col-6">Wind</dt>
-                            <dd class="col-6">{{ forecast.wind_speed }} m/s</dd>
+                            <dd class="col-6">{{ forecast.windSpeed }} m/s</dd>
 
                             <dt class="col-6">Cloudiness</dt>
-                            <dd class="col-6">{{ forecast.clouds }}%</dd>
+                            <dd class="col-6">{{ forecast.cloudiness }}%</dd>
                         </dl>
                     </div>
 
@@ -47,4 +53,15 @@
             </div>
         {% endfor %}
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var map = L.map('map').setView([{{ location.latitude }}, {{ location.longitude }}], 13);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            L.marker([{{ location.latitude }}, {{ location.longitude }}]).addTo(map);
+        });
+    </script>
 {% endblock %}
