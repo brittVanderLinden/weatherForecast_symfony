@@ -6,6 +6,7 @@ use App\Entity\Forecast;
 use App\Entity\Location;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +23,23 @@ class ForecastType extends AbstractType
             ->add('windSpeed')
             ->add('windDeg')
             ->add('cloudiness')
-            ->add('icon')
+            ->add('icon', ChoiceType::class, [
+                'choices' => [
+                    '(choose)' => null,
+                    'Sun' => 'sun',
+                    'Cloud' => 'cloud',
+                    'Clouds with rain' => 'cloud-rain',
+                    'Clouds with snow' => 'cloud-snow',
+                    'Clouds with sun' => 'cloud-sun',
+                    'Snow' => 'snow',
+                    'Wind' => 'wind',
+                    'Clouds with fog' => 'cloud-fog',
+                    'Clouds with hail' => 'cloud-hail',
+                    'Thunderstorm' => 'cloud-lightning-rain',
+                    'Sleet' => 'cloud-sleet',
+                    'Tornado' => 'tornado'
+                ]
+            ])
             ->add('location', EntityType::class, [
                 'class' => Location::class,
                 'choice_label' => 'name',
