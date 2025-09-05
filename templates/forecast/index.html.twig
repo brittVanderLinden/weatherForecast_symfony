@@ -1,0 +1,51 @@
+{% extends 'layout_crud.html.twig' %}
+
+{% block title %}Forecast index{% endblock %}
+
+{% block content %}
+    <h1>Forecast index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Feels like</th>
+                <th>Pressure</th>
+                <th>Humidity</th>
+                <th>WindSpeed</th>
+                <th>WindDeg</th>
+                <th>Cloudiness</th>
+                <th>Icon</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for forecast in forecasts %}
+            <tr>
+                <td>{{ forecast.location.name }}</td>
+                <td>{{ forecast.date ? forecast.date|date('d-m-Y') : '' }}</td>
+                <td>{{ forecast.temperature }}&deg;C</td>
+                <td>{{ forecast.flTemperature }}&deg;C</td>
+                <td>{{ forecast.pressure }}</td>
+                <td>{{ forecast.humidity }}&#37;</td>
+                <td>{{ forecast.windSpeed }}</td>
+                <td>{{ forecast.windDeg }}</td>
+                <td>{{ forecast.cloudiness }}&#37;</td>
+                <td><i class="bi-{{ forecast.icon }}"></i></td>
+                <td>
+                    <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}">show</a>
+                    <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_forecast_new') }}">Create new</a>
+{% endblock %}
